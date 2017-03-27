@@ -92,7 +92,6 @@ var Game = function () {
     this.obstacle = [];
     this.score = 0;
     this.ship = [];
-    this.hscore = 1000;
     this.rockspeed = 3;
     this.shipspeed = [7, 3];
     this.chukaspeed = 3;
@@ -102,13 +101,6 @@ var Game = function () {
     key: "addPoints",
     value: function addPoints() {
       this.score += 1;
-      if (this.score > this.hscore) {
-        this.hscore = this.score;
-      }
-
-      if (this.score > 4500) {
-        this.rockspeed = 4;
-      }
     }
   }, {
     key: "draw",
@@ -124,9 +116,6 @@ var Game = function () {
       ctx.fillStyle = "maroon";
       ctx.font = "bolder 30px Great Lakes Shadow NF";
       ctx.fillText("Score: " + this.score, 25, 50);
-      ctx.fillStyle = "maroon";
-      ctx.font = "bolder 30px Great Lakes Shadow NF";
-      ctx.fillText("High Score: " + this.hscore, 485, 50);
     }
   }, {
     key: "step",
@@ -182,7 +171,6 @@ var Game = function () {
   }, {
     key: "addObstacle",
     value: function addObstacle() {
-
       if (this.obstacle.length < 2) {
         var obstacle = new Obstacle({ game: this, pos: [750, 375], speed: this.rockspeed });
         this.obstacle.push(obstacle);
@@ -215,17 +203,18 @@ var Game = function () {
         this.ship.splice(this.ship.indexOf(object), 1);
       }
     }
-  }, {
-    key: "refresh",
-    value: function refresh() {
-      this.obstacle = [];
-      this.ship = [];
-      this.score = 0;
-      this.game_over = false;
-      this.chuka = null;
-      this.background = null;
-      this.addObjects();
-    }
+
+    // refresh(){
+    //   this.obstacle = []
+    //   this.ship = []
+    //   this.score = 0;
+    //   this.game_over = false;
+    //   this.chuka = null;
+    //   this.background = null;
+    //   this.addObjects();
+    // }
+
+
   }]);
 
   return Game;
@@ -251,7 +240,8 @@ var Game = __webpack_require__(0);
 var Keys = {
   down: false,
   space: false,
-  r: false
+  r: false,
+  t: false
 };
 
 window.onkeydown = function (e) {
@@ -604,19 +594,13 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var th = Math.floor(Math.random() * 2) + 1;
-
 var Obstacle = function () {
   function Obstacle(options) {
     _classCallCheck(this, Obstacle);
 
     this.speed = options.speed;
     this.game = options.game;
-    this.rn = 1;
     this.pos = options.pos;
-    this.spos = [options.pos[0], options.pos[1] - 150];
-    this.outbounds = false;
-    console.log(this.rn);
   }
 
   _createClass(Obstacle, [{
@@ -627,13 +611,7 @@ var Obstacle = function () {
         this.rock = new Image();
         this.rock.src = "assets/rock.png";
       }();
-      var imageRepository2 = new function () {
-        this.ship = new Image();
-        this.ship.src = "assets/ship.png";
-      }();
-      if (!this.outbounds) {
-        ctx.drawImage(imageRepository.rock, this.pos[0], this.pos[1], 82, 59);
-      }
+      ctx.drawImage(imageRepository.rock, this.pos[0], this.pos[1], 82, 59);
 
       this.move();
       this.checkCollision();
@@ -755,7 +733,6 @@ var Ship = function () {
     key: "checkCollision",
     value: function checkCollision() {
       if (this.distance(this.pos, this.game.chuka.pos) < 60) {
-        console.log("its colliding");
         this.game.gameOver();
       }
     }
@@ -763,7 +740,6 @@ var Ship = function () {
     key: "checkHeadCollision",
     value: function checkHeadCollision() {
       if (this.distance(this.tailpos, this.game.chuka.headpos) < 10) {
-        console.log("its colliding");
         this.game.gameOver();
       }
     }

@@ -6,7 +6,7 @@ body {
    text-decoration: none;
    font: inherit;
    vertical-align: baseline;
-   background-color: black;
+   background-color: PeachPuff;
    justify-content: center;
 }
 
@@ -15,10 +15,11 @@ canvas {
     margin: auto;
     display: block;
     width: 750px;
+    border-radius: 60px;
 }
 
 header{
-  background-color: black;
+  background-color: PeachPuff;
   text-align: center;
   margin: 20px;
   font-family: sans-serif;
