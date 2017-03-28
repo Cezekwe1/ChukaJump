@@ -1,7 +1,8 @@
 # Chuka Jump
 
 Chuka Has to go to the grocery but he lives in a terrible neighborhood there are rocks everywhere and aliens invaded his neighborhood specifically.
-
+[Live][link]
+[link]: https://cezekwe1.github.io/ChukaJump/
 ![main](assets/ChukaJumpScreenShot.png)
 
 
